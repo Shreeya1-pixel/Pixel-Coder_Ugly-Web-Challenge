@@ -2,8 +2,6 @@
 
 **NoMind™ AI — Insight Failure.** A single-file satire of a fake productivity startup: loud, hostile, and deliberately unusable. Built for the Ugly Web Challenge.
 
-Live site: deploy this repo with **GitHub Pages** (root / `index.html` — no build step).
-
 ---
 
 ## What you’re signing up for
@@ -98,23 +96,9 @@ Extra bottom padding keeps **Contact Us** readable above the fixed nav before th
 
 ---
 
-## Deploy on GitHub Pages
+## Run locally
 
-1. Push this repository to GitHub (see below).
-2. Repo **Settings → Pages**.
-3. Source: **Deploy from a branch** → branch **main** (or **master**), folder **`/ (root)`**.
-4. Your site will be served from **`index.html` at the repository root** — no configuration file required.
-
----
-
-## Local preview
-
-```bash
-cd Pixel-Coder_Ugly-Web-Challenge
-python3 -m http.server 8000
-```
-
-Open `http://localhost:8000`.
+If you want a local server: `python3 -m http.server 8000` in this folder, then open [http://localhost:8000](http://localhost:8000). You can also open `index.html` in a browser directly.
 
 ---
 
