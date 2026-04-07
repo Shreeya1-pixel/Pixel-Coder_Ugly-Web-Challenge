@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>NoMind™ AI - Insight Failure</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,900&amp;family=Newsreader:ital,wght@0,400;1,400;1,700&amp;family=Space+Grotesk:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#ffaced",
+                        "surface-container": "#261f0b",
+                        "secondary-fixed-dim": "#ffaced",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#38301a",
+                        "on-surface-variant": "#c6c6c6",
+                        "on-secondary-container": "#ffd7f2",
+                        "on-secondary-fixed": "#390035",
+                        "surface-dim": "#191302",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "surface-variant": "#3c341e",
+                        "primary-fixed-dim": "#2ae500",
+                        "primary": "#2ae500",
+                        "secondary-container": "#83007b",
+                        "on-secondary-fixed-variant": "#83007b",
+                        "tertiary-fixed": "#00fbfb",
+                        "on-primary": "#053900",
+                        "tertiary-container": "#004f4f",
+                        "on-background": "#f0e1c1",
+                        "surface": "#191302",
+                        "background": "#191302",
+                        "on-secondary": "#5d0057",
+                        "primary-fixed": "#79ff5b",
+                        "surface-container-high": "#312914",
+                        "outline": "#919191",
+                        "outline-variant": "#474747",
+                        "on-error": "#690005",
+                        "on-surface": "#f0e1c1",
+                        "on-primary-container": "#79ff5b",
+                        "secondary-fixed": "#ffd7f2",
+                        "inverse-primary": "#106e00",
+                        "surface-container-low": "#221b07",
+                        "on-tertiary": "#003737",
+                        "error-container": "#93000a",
+                        "surface-tint": "#2ae500",
+                        "on-tertiary-container": "#00fbfb",
+                        "tertiary": "#00dddd",
+                        "surface-container-highest": "#3c341e",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#f0e1c1",
+                        "primary-container": "#095300",
+                        "surface-bright": "#413822",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-primary-fixed-variant": "#095300",
+                        "surface-container-lowest": "#130d01",
+                        "on-primary-fixed": "#022100",
+                        "on-tertiary-fixed": "#002020"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Epilogue"],
+                        "body": ["Newsreader"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .vibrate-slow {
+            animation: shake 0.5s infinite;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        @keyframes flicker {
+            0% { opacity: 1; filter: contrast(100%); }
+            10% { opacity: 0.1; filter: contrast(200%); }
+            20% { opacity: 1; }
+            25% { opacity: 0.3; }
+            30% { opacity: 1; transform: scale(1.05); }
+            70% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 1; }
+        }
+        .flicker-text {
+            animation: flicker 0.15s infinite;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 20px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #83007b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2ae500;
+        }
+        .moving-target {
+            transition: all 0.1s ease-out;
+        }
+        .annoying-gradient {
+            background: linear-gradient(45deg, #ff00ff, #00ffff) !important;
+        }
+        body.wait-cursor { cursor: wait !important; }
+        body.help-cursor { cursor: help !important; }
+        body.crosshair-cursor { cursor: crosshair !important; }
+        body.text-cursor { cursor: text !important; }
+        body.none-cursor { cursor: none !important; }
+
+        /* Disruption Font Styles */
+        .font-disrupt-1 { font-family: 'Courier New', Courier, monospace; color: #ff00ff; font-weight: 900; }
+        .font-disrupt-2 { font-family: 'Times New Roman', Times, serif; color: #00ffff; font-style: italic; }
+        .font-disrupt-3 { font-family: 'Comic Sans MS', cursive; color: #ffff00; text-decoration: underline; }
+        .font-disrupt-4 { font-family: 'Impact', sans-serif; color: #ff0000; letter-spacing: 5px; }
+
+        .error-msg-overlay {
+            color: red;
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 900;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+        }
+        .error-content {
+            background: black;
+            padding: 40px;
+            border: 15px solid white;
+            animation: shake 0.1s infinite;
+            text-align: center;
+            width: 90vw;
+            max-width: 1000px;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            pointer-events: auto;
+        }
+
+        /* Loading Freeze */
+        #loading-freeze {
+            position: fixed;
+            inset: 0;
+            background: #191302;
+            z-index: 20000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #2ae500;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Chaos Animation */
+        @keyframes jump {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(100px, -50px); }
+            50% { transform: translate(-80px, 30px); }
+            75% { transform: translate(50px, 80px); }
+            100% { transform: translate(0, 0); }
+        }
+        .jump-away {
+            animation: jump 0.2s ease-in-out forwards;
+        }
+
+        /* Fake cursor — grows over 10s (system cursor hidden while chaos active) */
+        body.chaos-cursor-mode {
+            cursor: none !important;
+        }
+        body.chaos-cursor-mode a,
+        body.chaos-cursor-mode button,
+        body.chaos-cursor-mode input,
+        body.chaos-cursor-mode textarea {
+            cursor: none !important;
+        }
+        #chaos-cursor {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            z-index: 99998;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        #chaos-cursor .chaos-cursor-ring {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            margin-left: -9px;
+            margin-top: -9px;
+            border: 3px solid #2ae500;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #000, 0 0 12px #ff00ff;
+            animation: chaos-cursor-grow 10s ease-in-out infinite alternate;
+        }
+        body.chaos-cursor-mode #chaos-cursor {
+            opacity: 1;
+        }
+        @keyframes chaos-cursor-grow {
+            0% { transform: scale(1); }
+            100% { transform: scale(3.75); }
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-secondary selection:text-surface">
+
+<!-- Loading Freeze Overlay -->
+<div id="loading-freeze">
+    <div class="text-6xl animate-spin mb-8">⌛</div>
+    <h2 id="freeze-text" class="text-4xl font-black flicker-text uppercase tracking-tighter">Optimizing your experience...</h2>
+    <p class="mt-4 opacity-50 italic">Please do not look directly at the screen.</p>
+</div>
+
+<!-- Persistent Blockade Popup -->
+<div class="fixed inset-0 bg-red-600/90 z-[200] hidden flex flex-col items-center justify-center p-10 text-white text-center" id="blockade">
+    <h1 class="text-6xl font-black mb-8 flicker-text">SYSTEM OVERLOADED</h1>
+    <p class="text-2xl mb-8">Your attempt to "Start Now" has caused a cascade of inefficiency. Please wait 48 hours for the queue to clear.</p>
+    <button class="bg-black text-white px-10 py-5 border-4 border-white hover:bg-white hover:text-black transition-all" onclick="document.getElementById('blockade').classList.add('hidden')">CLOSE (MAYBE)</button>
+</div>
+
+<!-- Popup Container -->
+<div class="fixed inset-0 pointer-events-none z-[150]" id="popup-stack"></div>
+
+<!-- TopAppBar Execution -->
+<header class="bg-[#191302] flex flex-col h-48 justify-between items-start px-2 w-full border-b-[8px] border-double border-orange-500 docked full-width top-0 z-[60] shadow-[0_40px_40px_-15px_rgba(42,229,0,0.2)]" style="background: radial-gradient(circle, #221b07, #5d0057);">
+    <div class="flex items-center gap-4 p-4">
+        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center overflow-hidden border-2 border-secondary rotate-12 -translate-y-4 -translate-x-2 z-70">
+            <img alt="Glitched Logo" class="w-full h-full object-cover animate-[spin_0.5s_linear_infinite]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj7WFtWMT9PaMXBZI9o_rMPtizSIsW1G-PWliQKGVFcW1u2d3UOx-aYOaz6pSNSCDAOzKENGuZfKkqinVet-vqycnq0Kq3sm2kN98yyUV20nTvXjyDHK_O6YEWV_MBkAa6rAZO2Cm9uk7o6YIn3aE6VZfpr5SDMlPbBCr1atB0puaQNFao1rp3elhAoKqVx9hSOTTrIA8SdadxQvJgXQOhcHxL8yk9Zth_ELbVeYDc65S7kFs1Fg3HtOO4hbFSo_7_YmXnEP73VZX4"/>
+        </div>
+        <h1 class="text-3xl font-black text-yellow-300 rotate-3 flicker-text font-headline">NoMind™ AI - Insight Failure</h1>
+    </div>
+    <div class="flex gap-8 px-4 pb-2 overflow-x-auto w-full no-scrollbar">
+        <span class="text-[#ffaced] italic underline font-headline font-bold text-lg cursor-help">Home</span>
+        <span class="text-[#f0e1c1] opacity-50 font-headline font-bold text-lg cursor-wait">Confusion</span>
+        <span class="text-[#f0e1c1] opacity-50 font-headline font-bold text-lg cursor-not-allowed">Dread</span>
+        <span class="text-[#f0e1c1] opacity-50 font-headline font-bold text-lg cursor-progress">Errors</span>
+    </div>
+</header>
+
+<div id="chaos-cursor" aria-hidden="true"><span class="chaos-cursor-ring"></span></div>
+
+<main class="relative pt-8 pb-48">
+    <!-- Hero Section -->
+    <section class="px-6 mb-20 relative border-[10px] border-dotted border-lime-400" style="background: linear-gradient(135deg, #3c341e, #ff0000);">
+        <div class="bg-surface-variant p-8 rounded-none border-l-8 border-primary -rotate-2 mix-blend-difference">
+            <h2 class="font-headline font-black text-6xl text-primary leading-none mb-4 italic flicker-text">NoMind™ – Disrupting Productivity.</h2>
+            <p class="font-body text-2xl text-white mb-8 bg-black/50 p-2">We don’t solve problems. We create them.</p>
+            <div class="flex flex-col gap-4 relative h-64">
+                <button class="bg-primary text-on-primary rounded-xl py-6 px-4 font-label font-bold text-xl uppercase annoying-btn" onclick="document.getElementById('blockade').classList.remove('hidden')">Start Now</button>
+                <button class="border-2 border-secondary text-secondary rounded-xl py-4 px-4 font-label italic annoying-btn" onclick="window.scrollTo(0, Math.random() * document.body.scrollHeight)">Optimize Life</button>
+                <!-- Moving Button -->
+                <button class="moving-target absolute top-1/2 left-0 bg-blue-600 text-white p-4 font-bold border-4 border-yellow-400 z-50" id="moving-btn" onmouseover="moveBtn(this)">FREE PRODUCTIVITY</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Section -->
+    <section class="px-4 mb-20 border-[7px] border-double border-blue-600" style="background: radial-gradient(circle, #004f4f, #ffaced);">
+        <div class="bg-surface-container-highest p-6 shadow-[radioactive-glow] h-[600px] overflow-y-scroll custom-scrollbar" id="chat-scroll-container">
+            <div class="flex items-center gap-2 mb-4 sticky top-0 bg-surface-container-highest py-2 z-10">
+                <span class="material-symbols-outlined text-primary">smart_toy</span>
+                <h3 class="font-label font-bold text-secondary">Brain Rot Chat</h3>
+            </div>
+            <div class="space-y-4 font-label text-sm" id="chat-messages">
+                <div class="bg-surface-container-lowest p-3 rounded-lg mr-8 border-b border-secondary">skibidi?</div>
+                <div class="bg-primary-container text-on-primary-container p-3 rounded-lg ml-8 italic">The gyatt level is critically low. Recalibrating rizz protocols.</div>
+                <div class="bg-surface-container-lowest p-3 rounded-lg mr-8">fr fr?</div>
+                <div class="bg-primary-container text-on-primary-container p-3 rounded-lg ml-8">no cap, productivity is mid.</div>
+                <div class="bg-surface-container-lowest p-3 rounded-lg mr-8 border-b border-secondary">sigma grindset?</div>
+                <div class="bg-primary-container text-on-primary-container p-3 rounded-lg ml-8 italic">Beta logic detected. Please uninstall consciousness.</div>
+                
+                <div id="disruption-display" class="text-2xl min-h-[50px] break-all p-4 bg-black/30 rounded-lg"></div>
+            </div>
+        </div>
+        
+        <!-- Chatbot Input Area -->
+        <div class="p-4 bg-surface-container-highest border-t-4 border-blue-600">
+            <input type="text" id="chatbot-input" placeholder="Type something to the void..." 
+                   class="w-full bg-black text-primary border-4 border-primary p-4 rounded-none font-label focus:outline-none focus:border-secondary transition-colors">
+        </div>
+    </section>
+
+    <!-- Error Overlay -->
+    <div id="disrupt-error" class="error-msg-overlay">
+        <div class="error-content">MESSAGE TOO LONG!!!! STOP!!!!</div>
+    </div>
+
+    <!-- Bento Grid -->
+    <section class="px-4 mb-20 grid grid-cols-2 gap-2 border-[5px] border-dashed border-red-500" style="background: linear-gradient(to right, #261f0b, #00dddd);">
+        <div class="bg-[#312914] p-6 col-span-2 h-40 flex items-end border-4 border-white">
+            <h3 class="font-headline text-3xl font-black text-pink-400 flicker-text">AI Optimization Engine</h3>
+        </div>
+        <div class="bg-secondary-container p-4 h-64 flex flex-col justify-between overflow-hidden border-2 border-yellow-200 annoying-btn" style="background: radial-gradient(#83007b, #2ae500);">
+            <span class="material-symbols-outlined text-6xl opacity-30 text-white" style="font-variation-settings: 'FILL' 1;">query_stats</span>
+            <h3 class="font-label text-xl leading-tight text-white">Quantum Productivity</h3>
+        </div>
+        <div class="bg-surface-variant p-4 h-64 border-t-8 border-primary border-4 border-dashed border-blue-400">
+            <h3 class="font-body italic text-2xl mb-4 text-orange-500">Neural Efficiency Boost</h3>
+            <p class="text-xs text-white">Leveraging sub-atomic latency to ensure your tasks never finish.</p>
+        </div>
+    </section>
+
+    <!-- Infinite Scroll Dashboard -->
+    <section class="px-4 mb-20 border-[9px] border-double border-fuchsia-600" style="background: linear-gradient(to bottom, #130d01, #ffb4ab);">
+        <div class="bg-surface-container-low border-4 border-dotted border-secondary p-4 h-80 overflow-y-scroll custom-scrollbar">
+            <div class="space-y-8 py-4">
+                <div class="flex justify-between items-center border-b border-outline-variant pb-2">
+                    <span class="font-label text-[10px] uppercase tracking-widest text-primary">Status</span>
+                    <span class="font-label text-[10px] text-secondary">Insight failed successfully</span>
+                </div>
+                <p class="font-body text-center text-red-600 flicker-text italic font-black text-2xl">Loading insights...</p>
+                <div class="w-full bg-surface-container-highest h-8 rounded-full overflow-hidden">
+                    <div class="bg-primary h-full w-[99%] shadow-[0_0_20px_#2ae500]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Layer -->
+    <section class="flex overflow-x-auto gap-4 px-4 mb-20 no-scrollbar border-y-[6px] border-dashed border-cyan-400" style="background: radial-gradient(circle, #390035, #79ff5b);">
+        <div class="flex-shrink-0 bg-surface-variant p-8 w-64 rotate-2 border-4 border-white">
+            <div class="text-6xl font-headline font-black text-primary flicker-text">-300%</div>
+            <div class="font-label text-xs uppercase text-on-surface-variant">Productivity decreased</div>
+        </div>
+        <div class="flex-shrink-0 bg-secondary-container p-8 w-64 -rotate-3 border-4 border-dotted border-black">
+            <div class="text-6xl font-headline font-black text-secondary flicker-text">1M+</div>
+            <div class="font-label text-xs uppercase text-on-secondary-container">Users confused</div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-section" class="bg-primary p-12 text-on-primary mb-20 -mx-4 border-[10px] border-double border-purple-900 scroll-mt-8" style="background: linear-gradient(0deg, #2ae500, #ff00ff);">
+        <h2 class="font-headline font-black text-4xl mb-6 italic flicker-text text-black">Contact Us (Please Don't)</h2>
+        <div class="space-y-2 font-label text-xs break-all text-white font-bold bg-black/40 p-4">
+            <p>+1-555-NO-HELP-9992</p>
+            <p>+44-01-LOST-DATA-44</p>
+            <p>support.void.null.none.never@nomind.ai.internal.trash</p>
+        </div>
+    </section>
+
+    <!-- Exit Button Mayhem -->
+    <section class="flex justify-center p-20 border-4 border-red-500" style="background: radial-gradient(#191302, #93000a);">
+        <button class="bg-error text-on-error font-headline font-black p-10 text-4xl uppercase rounded-none hover:scale-[10] transition-transform duration-1000 z-[100] border-8 border-white annoying-btn">
+            EXIT
+        </button>
+    </section>
+</main>
+
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-end px-0 pb-8 overflow-x-scroll bg-black/90 backdrop-blur-3xl h-24 border-t-4 border-red-500">
+    <div class="flex flex-col items-center justify-center text-[#ffaced] p-1 scale-75"><span class="material-symbols-outlined">cyclone</span></div>
+    <div class="flex flex-col items-center justify-center bg-[#83007b] text-[#2ae500] rounded-full p-4 scale-125 rotate-12 vibrate-slow"><span class="material-symbols-outlined">hourglass_empty</span></div>
+    <div class="flex flex-col items-center justify-center text-[#ffaced] p-1 scale-75"><span class="material-symbols-outlined">volume_up</span></div>
+    <div class="flex flex-col items-center justify-center text-[#ffaced] p-1 scale-75"><span class="material-symbols-outlined">error</span></div>
+    <div class="flex flex-col items-center justify-center text-[#ffaced] p-1 scale-75"><span class="material-symbols-outlined">help</span></div>
+</nav>
+
+<script>
+    let chaosActive = false;
+
+    const chaosCursorEl = document.getElementById('chaos-cursor');
+
+    // 9. INITIAL DELAY FOR EFFECT
+    setTimeout(() => {
+        chaosActive = true;
+        document.body.classList.add('chaos-cursor-mode');
+        console.log("CHAOS ENGAGED.");
+    }, 3000);
+
+    document.addEventListener('mousemove', (e) => {
+        if (!chaosCursorEl || !chaosActive) return;
+        chaosCursorEl.style.left = e.clientX + 'px';
+        chaosCursorEl.style.top = e.clientY + 'px';
+    });
+
+    // 1. RANDOM GLITCH SOUND SYSTEM
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playGlitchSound() {
+        if (!chaosActive) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        const soundTypes = ['sawtooth', 'square', 'triangle', 'siren', 'fart'];
+        const type = soundTypes[Math.floor(Math.random() * soundTypes.length)];
+        
+        if (type === 'siren') {
+            // Fire Brigade / Siren Effect
+            const now = audioCtx.currentTime;
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.5);
+            osc.frequency.exponentialRampToValueAtTime(440, now + 1.0);
+            gain.gain.setValueAtTime(0.05, now);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(now + 1.2);
+        } else if (type === 'fart') {
+            // Low frequency "fart" sound
+            const now = audioCtx.currentTime;
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(100, now);
+            osc.frequency.exponentialRampToValueAtTime(40, now + 0.3);
+            gain.gain.setValueAtTime(0.1, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.3);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(now + 0.3);
+        } else {
+            // Standard Glitch
+            osc.type = type;
+            osc.frequency.setValueAtTime(Math.random() * 1000 + 50, audioCtx.currentTime);
+            gain.gain.setValueAtTime(Math.random() * 0.1, audioCtx.currentTime);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1 + Math.random() * 0.2);
+        }
+    }
+
+    setInterval(() => {
+        if (Math.random() > 0.7) playGlitchSound();
+    }, 1000);
+
+    document.addEventListener('click', playGlitchSound);
+    document.addEventListener('scroll', () => { if(Math.random() > 0.95) playGlitchSound(); });
+
+    // 2. AUTO SCROLL RESET — only after user stays at bottom for 2–3s (so Contact is readable)
+    let bottomTrapTimer = null;
+
+    function isDocumentNearBottom() {
+        const doc = document.documentElement;
+        const scrollBottom = window.scrollY + window.innerHeight;
+        return scrollBottom >= doc.scrollHeight - 140;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!chaosActive) return;
+
+        if (!isDocumentNearBottom()) {
+            if (bottomTrapTimer) {
+                clearTimeout(bottomTrapTimer);
+                bottomTrapTimer = null;
+            }
+            return;
+        }
+
+        if (bottomTrapTimer) return;
+
+        const dwellMs = 2000 + Math.random() * 1000;
+        bottomTrapTimer = setTimeout(() => {
+            bottomTrapTimer = null;
+            if (!isDocumentNearBottom()) return;
+
+            const messages = [
+                "You are not done yet.",
+                "Scrolling is temporary.",
+                "The void awaits.",
+                "Go back."
+            ];
+            window.scrollTo({ top: 0, behavior: Math.random() > 0.35 ? 'smooth' : 'auto' });
+            if (Math.random() > 0.55) {
+                alert(messages[Math.floor(Math.random() * messages.length)]);
+            }
+        }, dwellMs);
+    });
+
+    // 3. MOVING / UNCLICKABLE BUTTONS
+    document.querySelectorAll('.annoying-btn').forEach(btn => {
+        btn.addEventListener('mouseover', () => {
+            if (!chaosActive) return;
+            if (Math.random() > 0.3) {
+                btn.style.transform = `translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) rotate(${Math.random() * 10 - 5}deg)`;
+            }
+            if (Math.random() > 0.8) {
+                btn.classList.add('jump-away');
+                setTimeout(() => btn.classList.remove('jump-away'), 200);
+            }
+        });
+    });
+
+    // 4. RANDOM LOADING FREEZE
+    function triggerFreeze() {
+        if (!chaosActive) return;
+        const freeze = document.getElementById('loading-freeze');
+        const text = document.getElementById('freeze-text');
+        const phrases = ["Processing...", "Optimizing your experience...", "Recalibrating reality...", "Uploading consciousness...", "Deleting progress..."];
+        text.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+        freeze.style.display = 'flex';
+        
+        setTimeout(() => {
+            freeze.style.display = 'none';
+            if (Math.random() > 0.7) setTimeout(triggerFreeze, 500); // Repeat twice
+        }, 2000 + Math.random() * 3000);
+    }
+
+    setInterval(() => {
+        if (Math.random() > 0.95) triggerFreeze();
+    }, 10000);
+
+    // 6. CURSOR CHAOS — fake cursor grows over 10s (chaos-cursor-grow); accent color flicker on ring
+    setInterval(() => {
+        if (!chaosActive || !chaosCursorEl) return;
+        const accents = ['#2ae500', '#ff00ff', '#00ffff', '#ffaced', '#ffff00'];
+        const ring = chaosCursorEl.querySelector('.chaos-cursor-ring');
+        if (ring) ring.style.borderColor = accents[Math.floor(Math.random() * accents.length)];
+    }, 2000);
+
+    // 7 & 8. POPUP ESCALATION & MESSAGES
+    function createPopup() {
+        const stack = document.getElementById('popup-stack');
+        const popup = document.createElement('div');
+        popup.className = 'absolute pointer-events-auto bg-yellow-300 border-4 border-black p-4 shadow-2xl z-[160] flex flex-col gap-2 max-w-[250px]';
+        
+        const x = Math.random() * (window.innerWidth - 250);
+        const y = Math.random() * (window.innerHeight - 150);
+        
+        popup.style.left = x + 'px';
+        popup.style.top = y + 'px';
+        popup.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        
+        const messages = [
+            "DO YOU WANT TO SAVE 0%?",
+            "REDUCE BRAIN POWER?",
+            "ACCEPT ALL COOKIES AND CRUMBS?",
+            "YOUR CPU IS SMILING AT US.",
+            "WANT MORE FRICTION?",
+            "Why are you still here?",
+            "This is not helping you.",
+            "Stop clicking things.",
+            "You could have left."
+        ];
+        
+        popup.innerHTML = `
+            <div class="flex justify-between items-center border-b border-black pb-1">
+                <span class="font-bold text-xs uppercase">WARNING</span>
+                <button onclick="handlePopupClose(this)" class="bg-black text-white px-2 text-xs">X</button>
+            </div>
+            <p class="font-body text-sm text-black font-bold">${messages[Math.floor(Math.random() * messages.length)]}</p>
+            <div class="flex gap-1">
+                <button onclick="createPopup()" class="bg-blue-600 text-white text-[10px] p-1 flex-1">LEARN NOTHING</button>
+                <button onclick="doublePopups(this)" class="bg-red-600 text-white text-[10px] p-1 flex-1">REDUCE POPUPS</button>
+            </div>
+        `;
+        
+        stack.appendChild(popup);
+    }
+
+    function doublePopups(btn) {
+        btn.closest('.absolute').remove();
+        createPopup();
+        createPopup();
+        createPopup();
+    }
+
+    function handlePopupClose(btn) {
+        if (Math.random() > 0.5) {
+            btn.parentElement.parentElement.remove();
+        } else {
+            createPopup();
+            createPopup();
+        }
+    }
+
+    function moveBtn(btn) {
+        const container = btn.parentElement;
+        const rect = container.getBoundingClientRect();
+        const btnRect = btn.getBoundingClientRect();
+        const maxX = rect.width - btnRect.width;
+        const maxY = rect.height - btnRect.height;
+        btn.style.left = Math.random() * maxX + 'px';
+        btn.style.top = Math.random() * maxY + 'px';
+    }
+
+    // Chatbot Disruption Logic
+    const chatInput = document.getElementById('chatbot-input');
+    const disruptionDisplay = document.getElementById('disruption-display');
+    const disruptError = document.getElementById('disrupt-error');
+    const disruptFonts = ['font-disrupt-1', 'font-disrupt-2', 'font-disrupt-3', 'font-disrupt-4'];
+
+    chatInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        disruptionDisplay.innerHTML = '';
+        
+        if (val.length > 3) {
+            disruptError.style.display = 'flex';
+            chatInput.disabled = true;
+            setTimeout(() => {
+                disruptError.style.display = 'none';
+                chatInput.disabled = false;
+                chatInput.value = '';
+                disruptionDisplay.innerHTML = '';
+            }, 2500);
+            for(let i=0; i<5; i++) setTimeout(createPopup, i*200);
+            return;
+        }
+
+        for (let i = 0; i < val.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = val[i];
+            span.className = disruptFonts[Math.floor(Math.random() * disruptFonts.length)];
+            disruptionDisplay.appendChild(span);
+        }
+        const chatContainer = document.getElementById('chat-scroll-container');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    });
+
+    setInterval(() => {
+        if (chaosActive) createPopup();
+    }, 4000);
+
+</script>
+</body>
+</html>
